@@ -9,4 +9,16 @@ const getDevices = async (req, res) => {
     }
 }
 
-module.exports = { getDevices };
+
+//refreshDevice
+
+const refreshDevice = async (req, res) => {
+    try {
+        const devices = await Devices.deleteMany();
+        res.json(devices);
+    } catch (err) {
+        res.json({ message: err });
+    }
+}
+
+module.exports = { getDevices, refreshDevice };
