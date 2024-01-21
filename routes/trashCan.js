@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get('/', trashCans);
+// router.get('/', trashCans);
 router.get('/image/:id', getImage);
 router.post('/', createTrashCan);
 router.post('/images', upload.single('image'), addImage);
