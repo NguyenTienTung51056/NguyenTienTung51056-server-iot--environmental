@@ -4,7 +4,7 @@ const { trashCans, createTrashCan, updateTrashCan, addImage, getImage } = requir
 const multer = require('multer');
 const path = require('path');
 const storage = multer.diskStorage({
-    destination: 'uploads/images/',
+    destination: 'tmp/images/',
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     },
