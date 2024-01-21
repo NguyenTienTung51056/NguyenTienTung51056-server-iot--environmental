@@ -4,7 +4,7 @@ const { trashCans, createTrashCan, updateTrashCan, addImage, getImage } = requir
 const multer = require('multer');
 const path = require('path');
 const storage = multer.diskStorage({
-    destination: 'tmp/images/',
+    destination: 'upload/images/',
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     },
@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// router.get('/', trashCans);
+router.get('/', trashCans);
 router.get('/image/:id', getImage);
 router.post('/', createTrashCan);
 router.post('/images', upload.single('image'), addImage);

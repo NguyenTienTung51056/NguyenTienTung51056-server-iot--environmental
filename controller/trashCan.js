@@ -54,7 +54,7 @@ const getLevelGauge = async (req, res) => {
 const addImage = async (req, res) => {
     try {
         // Lưu đường dẫn vào MongoDB
-        const imagePath = '/tmp/images/' + req.file.filename;
+        const imagePath = '/upload/images/' + req.file.filename;
         const newImage = new Image({ image_url: imagePath });
         await newImage.save();
 
