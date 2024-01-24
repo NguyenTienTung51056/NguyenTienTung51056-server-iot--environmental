@@ -1,6 +1,5 @@
 import Trashcan from "../model/trashCan.js";
 import Image from "../model/image.js";
-import path from 'path';
 import { getFirebaseStorage } from '../config/firebase.js';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -53,33 +52,6 @@ const getLevelGauge = async (req, res) => {
     }
 }
 
-const addImage = async (req, res) => {
-    try {
-        // Lưu đường dẫn vào MongoDB
-        const imagePath = '/upload/images/' + req.file.filename;
-        const newImage = new Image({ image_url: imagePath });
-        await newImage.save();
-
-        res.json({ imagePath });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-const getImage = async (req, res) => {
-    try {
-        const image = await Image.findById(req.params.id);
-
-        if (!image) {
-            return res.status(404).json({ error: 'Image not found' });
-        }
-        const imagePath = path.join(__dirname, '..', image.image_url);
-        res.sendFile(imagePath);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
-
 const uploadImage = async (req, res) => {
 
     const storage = getFirebaseStorage();
@@ -95,17 +67,18 @@ const uploadImage = async (req, res) => {
 
             console.log('Uploaded a blob or file!');
             console.log('Download URL:', downloadURL);
+            Image.create({ name: filePath, image_url: downloadURL });
 
             res.json({ imagePath: filePath, downloadURL });
         })
         .catch((error) => {
             console.error(error);
             res.status(500).json({ error: error.message });
-        }); 
+        });
 };
 
 
 
 
 
-export { trashCans, createTrashCan, updateTrashCan, getLevelGauge, addImage, getImage, uploadImage };
+export { trashCans, createTrashCan, updateTrashCan, getLevelGauge, uploadImage };
