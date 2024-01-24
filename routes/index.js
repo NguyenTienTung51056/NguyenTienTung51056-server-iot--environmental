@@ -1,11 +1,11 @@
-const trashCanRouter = require('./trashCan');
-const deviceRouter = require('./device');
+import trashCanRouter from './trashCan.js';
+import deviceRouter from './device.js'
 
 
-function route(app){
+function route(app) {
     app.use('/trashcans', trashCanRouter);
-    app.use('/devices',deviceRouter)
+    app.use('/devices', deviceRouter)
 }
 
 
-module.exports = route;
+export default route;

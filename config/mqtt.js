@@ -1,6 +1,6 @@
 // mqttHandler.js
-const mqtt = require('mqtt');
-const { handleConnectMessage, handleDistanceMessage, handleLocationMessage } = require('../db/mongodbHandler');
+import mqtt from 'mqtt';
+import { handleConnectMessage, handleDistanceMessage, handleLocationMessage } from '../db/mongodbHandler.js';
 
 let client; // MQTT client
 
@@ -65,4 +65,4 @@ const connectMqtt = async () => {
     });
 }
 
-module.exports = { connectMqtt };
+export { connectMqtt, client };

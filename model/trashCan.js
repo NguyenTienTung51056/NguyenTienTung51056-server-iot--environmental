@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const TrashCanSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, },
@@ -24,4 +23,5 @@ const TrashCanSchema = new mongoose.Schema(
 
 
 
-module.exports = mongoose.model("Trashcans", TrashCanSchema);
+const TrashCan = mongoose.model("TrashCan", TrashCanSchema);
+export default TrashCan;

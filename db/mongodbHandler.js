@@ -1,8 +1,8 @@
-const Device = require("../model/device");
+import Device from '../model/device.js';
 
 const handleConnectMessage = async (messagee) => {
     try {
-        const { mac_a, lat=0, lng=0, level_gauges=0 } = JSON.parse(messagee);
+        const { mac_a, lat = 0, lng = 0, level_gauges = 0 } = JSON.parse(messagee);
         const Devices = await Device.find();
         let device = Devices.find(device => device.mac_a === mac_a);
         if (device) {
@@ -16,14 +16,14 @@ const handleConnectMessage = async (messagee) => {
 
 const handleDistanceMessage = async (messagee) => {
     try {
-        const { mac_a,distance } = JSON.parse(messagee);
+        const { mac_a, distance } = JSON.parse(messagee);
         const Devices = await Device.find();
         let device = Devices.find(device => device.mac_a === mac_a);
         if (device) {
             device = await Device.updateOne({
                 mac_a
             }, {
-                level_gauges:distance
+                level_gauges: distance
             });
         } else {
             const data = new Device({
@@ -62,4 +62,4 @@ const handleLocationMessage = async (messagee) => {
 };
 
 
-module.exports = { handleConnectMessage, handleDistanceMessage, handleLocationMessage };
+export { handleConnectMessage, handleDistanceMessage, handleLocationMessage };

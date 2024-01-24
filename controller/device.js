@@ -1,4 +1,4 @@
-const Devices = require("../model/device");
+import Devices from '../model/device.js';
 
 const getDevices = async (req, res) => {
     try {
@@ -21,4 +21,4 @@ const refreshDevice = async (req, res) => {
     }
 }
 
-module.exports = { getDevices, refreshDevice };
+export { getDevices, refreshDevice };

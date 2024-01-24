@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const {getDevices,refreshDevice} = require('../controller/device');
+import { getDevices, refreshDevice } from '../controller/device.js';
 
 router.get('/', getDevices);
 router.delete('/', refreshDevice);
 
 
-module.exports = router;
+export default router;

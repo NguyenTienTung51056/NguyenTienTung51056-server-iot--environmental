@@ -1,22 +1,14 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { trashCans, createTrashCan, updateTrashCan, addImage, getImage } = require('../controller/trashCan');
-const multer = require('multer');
-const path = require('path');
-const storage = multer.diskStorage({
-    destination: 'upload/images/',
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    },
-});
-
-const upload = multer({ storage: storage });
+import { trashCans, createTrashCan, updateTrashCan, addImage, getImage, uploadImage } from '../controller/trashCan.js';
+import multer from 'multer';
+const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/', trashCans);
 router.get('/image/:id', getImage);
 router.post('/', createTrashCan);
-router.post('/images', upload.single('image'), addImage);
+router.post('/images', upload.single('image'), uploadImage);
 router.put('/:id', updateTrashCan);
 
 
-module.exports = router;
+export default router;

@@ -1,22 +1,21 @@
-const express = require('express');
-require('dotenv').config();
+import express from 'express';
+import dotenv from 'dotenv';
 const app = express();
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const route = require('./routes/index');
-const { connectMqtt } = require('./config/mqtt');
-
-const connectDB = require('./config/db');
-
-
+dotenv.config();
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import route from './routes/index.js';
+import { connectMqtt } from './config/mqtt.js';
+import connectDB from './config/db.js';
+import { initializeFirebaseApp } from './config/firebase.js';
 const PORT = process.env.PORT || 8080;
 
 //aloww cors
 app.use(cors());
-
+initializeFirebaseApp();
 
 //connect to mongodb
-connectDB.connectDB();
+connectDB()
 
 //connect to mqtt
 connectMqtt();

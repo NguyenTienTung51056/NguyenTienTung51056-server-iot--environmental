@@ -1,6 +1,8 @@
-const Trashcan = require("../model/trashCan");
-const Image = require("../model/image");
-const path = require('path');
+import Trashcan from "../model/trashCan.js";
+import Image from "../model/image.js";
+import path from 'path';
+import { getFirebaseStorage } from '../config/firebase.js';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 //get all trashcans
@@ -78,6 +80,32 @@ const getImage = async (req, res) => {
     }
 }
 
+const uploadImage = async (req, res) => {
+
+    const storage = getFirebaseStorage();
+    const file = req.file;
+    const filePath = 'images/' + file.originalname;
+
+    const storageRef = ref(storage, filePath);
+
+    uploadBytes(storageRef, file.buffer)
+        .then(async (snapshot) => {
+            // Lấy URL của tệp đã tải lên
+            const downloadURL = await getDownloadURL(storageRef);
+
+            console.log('Uploaded a blob or file!');
+            console.log('Download URL:', downloadURL);
+
+            res.json({ imagePath: filePath, downloadURL });
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).json({ error: error.message });
+        }); 
+};
 
 
-module.exports = { trashCans, createTrashCan, updateTrashCan, getLevelGauge, addImage, getImage };
+
+
+
+export { trashCans, createTrashCan, updateTrashCan, getLevelGauge, addImage, getImage, uploadImage };
