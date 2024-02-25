@@ -11,7 +11,7 @@ const uploadImageToFirebase = async (file) => {
         await uploadBytes(storageRef, file.buffer)
             .then(async (snapshot) => {
                 const url = await getDownloadURL(snapshot.ref);
-                data.image_url = url;
+                data.url = url;
                 data.name = filePath;
             })
             .catch((err) => {

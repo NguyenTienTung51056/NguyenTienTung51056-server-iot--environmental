@@ -1,5 +1,4 @@
 import Image from "../model/image.js"
-import TrashCan from "../model/trashCan.js";
 import { uploadImageToFirebase } from '../utils/uploadImage.js'
 
 const uploadImage = async (req, res) => {
@@ -9,6 +8,11 @@ const uploadImage = async (req, res) => {
     try {
         const data = await uploadImageToFirebase(file)
         data.image_type = nameTypeOfImage;
+        if (nameTypeOfImage === "image_area") {
+            data.image_area = data.url;
+        } else {
+            data.image_thumnail = data.url;
+        }
         data.trashCan = trashCanId;
         const savedImage = await Image.create(data);
         if (savedImage) {
