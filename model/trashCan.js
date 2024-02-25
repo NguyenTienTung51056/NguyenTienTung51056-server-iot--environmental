@@ -13,6 +13,7 @@ const TrashCanSchema = new mongoose.Schema(
         height: { type: Number, required: false },
         width: { type: Number, required: false },
         type: { type: String, enum: ["organic", "inorganic", "other"], required: false },
+        image_trash_type: { type: String, required: false },
         level_gauges: { type: Number, required: false }
       }
     ],
