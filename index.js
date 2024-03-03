@@ -11,7 +11,17 @@ import { initializeFirebaseApp } from './config/firebase.js';
 const PORT = process.env.PORT || 8080;
 
 //aloww cors
-app.use(cors());
+app.use(
+    cors({
+        origin: [
+            "http://localhost:3000/",
+            "https://environmentadmin.netlify.app/",
+        ],
+        credentials: true,
+        methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
+        exposedHeaders: ["Set-Cookie"],
+    })
+);
 initializeFirebaseApp();
 
 //connect to mongodb

@@ -16,7 +16,6 @@ const connectMqtt = async () => {
 
     // Initialize the MQTT client
     client = mqtt.connect(mqttOptions);
-
     // Setup the callbacks
     client.on('connect', function () {
         console.log('Connected to MQTT server');
@@ -24,14 +23,18 @@ const connectMqtt = async () => {
         client.on('message', function (topic, message) {
             switch (topic) {
                 case 'connect':
-                    handleConnectMessage(message.toString());
+                    console.log('Received message on distance topic:', message.toString());
+                    //handleConnectMessage(message.toString());
                     break;
                 case 'distance':
                     console.log('Received message on distance topic:', message.toString());
-                    handleDistanceMessage(message.toString());
+                    // handleDistanceMessage(message.toString());
                     break;
                 case 'location':
-                    handleLocationMessage(message.toString());
+                    // handleLocationMessage(message.toString());
+                    break;
+                case 'trash_level_present':
+                    console.log('Received message on distance topic:', message.toString());
                     break;
                 default:
                     console.log('Unknown topic:', topic);
@@ -58,6 +61,14 @@ const connectMqtt = async () => {
         client.subscribe('location', function (err) {
             if (err) {
                 console.log('Error subscribing to location:', err);
+            } else {
+                console.log('Subscribed to location');
+            }
+        });
+
+        client.subscribe('trash_level_present', function (err) {
+            if (err) {
+                console.log('Error subscribing to trash_level_present:', err);
             } else {
                 console.log('Subscribed to location');
             }
