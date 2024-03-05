@@ -14,10 +14,10 @@ const TrashCanSchema = new mongoose.Schema(
         width: { type: Number, required: false },
         type: { type: String, enum: ["organic", "inorganic", "other"], required: false },
         image_trash_type: { type: String, required: false },
-        level_gauges: { type: Number, required: false }
+        level_gauges: { type: Number, required: false },
+        id_mac_of_device: { type: String, required: false },
       }
     ],
-    id_mac_of_device: { type: String, required: false },
   },
   { timestamps: true }
 );

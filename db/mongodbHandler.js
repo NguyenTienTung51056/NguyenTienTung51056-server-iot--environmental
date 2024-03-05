@@ -1,4 +1,5 @@
 import Device from '../model/device.js';
+import TrashCan from '../model/trashCan.js';
 
 const handleConnectMessage = async (messagee) => {
     try {
@@ -17,22 +18,15 @@ const handleConnectMessage = async (messagee) => {
 const handleDistanceMessage = async (messagee) => {
     try {
         const { mac_a, distance } = JSON.parse(messagee);
-        const Devices = await Device.find();
-        let device = Devices.find(device => device.mac_a === mac_a);
-        if (device) {
-            device = await Device.updateOne({
-                mac_a
-            }, {
-                level_gauges: distance
+        const trashcans = await TrashCan.find();
+        let trashcan = trashcans.find(trashcan => trashcan.trash_child.find(trash => trash.id_mac_of_device === mac_a));
+        if (trashcan) {
+            trashcan.trash_child.map(async trash => {
+                if (trash.id_mac_of_device === mac_a) {
+                    trash.level_gauges = distance;
+                    await trashcan.save();
+                }
             });
-        } else {
-            const data = new Device({
-                mac_a: mac_a,
-                level_gauges: 0,
-                lat: 0,
-                lng: 0
-            });
-            await data.save();
         }
     } catch (error) {
         console.log(error);

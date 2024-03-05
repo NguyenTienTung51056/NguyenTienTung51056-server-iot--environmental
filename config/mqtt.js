@@ -23,18 +23,17 @@ const connectMqtt = async () => {
         client.on('message', function (topic, message) {
             switch (topic) {
                 case 'connect':
-                    console.log('Received message on distance topic:', message.toString());
+                   // console.log('Received message on distance topic:', message.toString());
                     //handleConnectMessage(message.toString());
                     break;
                 case 'distance':
-                    console.log('Received message on distance topic:', message.toString());
-                    // handleDistanceMessage(message.toString());
+                     handleDistanceMessage(message.toString());
                     break;
                 case 'location':
                     // handleLocationMessage(message.toString());
                     break;
                 case 'trash_level_present':
-                    console.log('Received message on distance topic:', message.toString());
+                    //console.log('Received message on distance topic:', message.toString());
                     break;
                 default:
                     console.log('Unknown topic:', topic);
