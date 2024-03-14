@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 const imageSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name_thumnail: { type: String, required: true },
+    name_area: { type: String, required: true },
     image_thumnail: { type: String, required: false },
     image_area: { type: String, required: false },
-    image_type: { type: String, enum: ['image_area', 'image_thumnail'] },
     trashCan: { type: mongoose.Schema.Types.ObjectId, ref: 'TrashCan', required: false }
 }, { timestamps: true });
 
