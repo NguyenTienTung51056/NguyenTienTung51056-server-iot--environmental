@@ -38,6 +38,27 @@ const createTrashCan = async (req, res) => {
     } = req.files;
 
     try {
+
+        if (lat === undefined || lng === undefined || address === undefined || name === undefined || count_trash_child === undefined || trash_child === undefined || district === undefined || commune === undefined || province === undefined || image_area === undefined || image_thumbnail === undefined || trash_child_images === undefined) {
+            return res.json({
+                status: "fail",
+                code: 400,
+                message: "Please fill all the fields"
+            });
+        }
+
+        const mac_id_of_device_exist = await Trashcan.findOne({
+            "trash_child.id_mac_of_device": { $in: trash_child.map(trash => trash.id_mac_of_device) }
+        });
+
+        if (mac_id_of_device_exist) {
+            return res.json({
+                status: "fail",
+                code: 400,
+                message: "Mac id of device already exists"
+            });
+        }
+
         const trashcan = new Trashcan({
             name,
             lat,
@@ -46,6 +67,8 @@ const createTrashCan = async (req, res) => {
             count_trash_child,
             trash_child
         });
+
+
         const trashcansaved = await trashcan.save();
 
         const location = new Location({
