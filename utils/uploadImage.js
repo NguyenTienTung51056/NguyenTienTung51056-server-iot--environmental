@@ -1,5 +1,5 @@
 import { getFirebaseStorage } from "../config/firebase.js";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, listAll,deleteObject  } from "firebase/storage";
 
 
 const uploadImageToFirebase = async (idTrashcan, file, trashChild) => {
@@ -29,16 +29,17 @@ const listImageFromFirebase = async (namePath) => {
     const storageRef = ref(storage, namePath);
     const listRef = ref(storageRef);
     const list = [];
-    listRef.listAll()
-        .then((res) => {
-            res.items.forEach((itemRef) => {
-                list.push(itemRef.fullPath);
-            });
-            return list;
-        })
-        .catch((err) => {
-            return err.message;
+
+    try {
+        const res = await listAll(listRef);
+        res.items.forEach((itemRef) => {
+            list.push(itemRef.fullPath);
         });
+        return list;
+    } catch (err) {
+        console.error(err.message);
+        return [];
+    }
 }
 
 
@@ -46,7 +47,7 @@ const listImageFromFirebase = async (namePath) => {
 const deleteImageFromFirebase = async (namePath) => {
     const storage = getFirebaseStorage();
     const storageRef = ref(storage, namePath);
-    storageRef.delete()
+    deleteObject(storageRef)
         .then(() => {
             return true;
         })
@@ -55,4 +56,4 @@ const deleteImageFromFirebase = async (namePath) => {
         });
 }
 
-export { uploadImageToFirebase };
+export { uploadImageToFirebase, listImageFromFirebase, deleteImageFromFirebase };
