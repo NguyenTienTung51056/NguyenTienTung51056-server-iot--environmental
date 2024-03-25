@@ -1,5 +1,5 @@
 import { getFirebaseStorage } from "../config/firebase.js";
-import { ref, uploadBytes, getDownloadURL, listAll,deleteObject  } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL, listAll, deleteObject } from "firebase/storage";
 
 
 const uploadImageToFirebase = async (idTrashcan, file, trashChild) => {
