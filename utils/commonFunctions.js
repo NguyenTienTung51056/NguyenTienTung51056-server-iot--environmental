@@ -30,9 +30,8 @@ const validateTrashCanFields = (req, res) => {
         image_thumbnail === '' ||
         trash_child_images === ''
     ) {
-        return res.json({
+        return res.status(400).json({
             status: "fail",
-            code: 400,
             message: "Please fill all the fields"
         });
     }

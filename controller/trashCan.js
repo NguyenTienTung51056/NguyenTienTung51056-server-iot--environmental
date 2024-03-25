@@ -20,7 +20,11 @@ const trashCans = async (req, res) => {
 
         res.json(trashCans);
     } catch (err) {
-        res.json({ message: err });
+        console.log(err);
+        res.status(500).json({
+            status: "error",
+            message: "An error occurred while fetching trashcans"
+        });
     }
 };
 
@@ -54,9 +58,8 @@ const createTrashCan = async (req, res) => {
         });
 
         if (mac_id_of_device_exist) {
-            return res.json({
+            return res.status(400).json({
                 status: "fail",
-                code: 400,
                 message: "Mac id of device already exists"
             });
         }
@@ -123,8 +126,10 @@ const createTrashCan = async (req, res) => {
             message: "Trashcan created successfully"
         });
     } catch (err) {
-        res.json({
-            message: err
+        console.log(err);
+        res.status(500).json({
+            status: "error",
+            message: "An error occurred while creating the trashcan"
         });
     }
 };
@@ -163,9 +168,8 @@ const updateTrashCan = async (req, res) => {
         });
 
         if (mac_id_of_device_exist) {
-            return res.json({
+            return res.status(400).json({
                 status: "fail",
-                code: 400,
                 message: "Mac id of device already exists"
             });
         }
@@ -195,7 +199,11 @@ const updateTrashCan = async (req, res) => {
             message: "Trashcan updated successfully"
         });
     } catch (err) {
-        res.json({ message: err });
+        console.log(err);
+        res.status(500).json({
+            status: "error",
+            message: "An error occurred while updating the trashcan"
+        });
     }
 }
 
