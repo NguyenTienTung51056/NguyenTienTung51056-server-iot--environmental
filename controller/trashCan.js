@@ -5,7 +5,7 @@ import { uploadImageToFirebase } from "../utils/uploadImage.js";
 import { deleteImagesFromFirebase, deleteUnusedImagesFromFirebase } from "../utils/deleteImageFromFirebase.js";
 import TrashCan from "../model/trashCan.js";
 import { updateTrashChildImages, uploadImagesToFirebase } from "../utils/updateTrashCan.js";
-import { checkDuplicateMacIDs, validateTrashCanFields } from "../utils/commonFunctions.js";
+import { validateTrashCanFields } from "../utils/commonFunctions.js";
 
 //get all trashcans
 const trashCans = async (req, res) => {
@@ -48,7 +48,10 @@ const createTrashCan = async (req, res) => {
 
         if (validationError) return validationError;
 
-        const mac_id_of_device_exist = await checkDuplicateMacIDs(req, 0);
+        const mac_ids = trash_child.map(trash => trash.id_mac_of_device);
+        const mac_id_of_device_exist = await Trashcan.findOne({
+            "trash_child.id_mac_of_device": { $in: mac_ids }
+        });
 
         if (mac_id_of_device_exist) {
             return res.json({
@@ -153,7 +156,11 @@ const updateTrashCan = async (req, res) => {
         const validationError = validateTrashCanFields(req, res);
         if (validationError) return validationError;
 
-        const mac_id_of_device_exist = await checkDuplicateMacIDs(req, 1);
+        const mac_ids = trash_child.map(trash => trash.id_mac_of_device);
+        const mac_id_of_device_exist = await Trashcan.findOne({
+            _id: { $ne: _id }, // Loại trừ Trashcan mà bạn đang tạo mới
+            "trash_child.id_mac_of_device": { $in: mac_ids }
+        });
 
         if (mac_id_of_device_exist) {
             return res.json({
