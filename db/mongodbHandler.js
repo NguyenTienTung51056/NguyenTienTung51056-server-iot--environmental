@@ -17,16 +17,10 @@ const handleConnectMessage = async (messagee) => {
 const handleDistanceMessage = async (messagee) => {
     try {
         const { mac_a, distance } = JSON.parse(messagee);
-        const trashcans = await TrashCan.find();
-        let trashcan = trashcans.find(trashcan => trashcan.trash_child.find(trash => trash.id_mac_of_device === mac_a));
-        if (trashcan) {
-            trashcan.trash_child.map(async trash => {
-                if (trash.id_mac_of_device === mac_a) {
-                    trash.level_gauges = distance;
-                    await trashcan.save();
-                }
-            });
-        }
+        await TrashCan.updateOne(
+            { "trash_child.id_mac_of_device": mac_a }, // Điều kiện tìm kiếm
+            { $set: { "trash_child.$.level_gauges": distance } } // Dữ liệu cập nhật
+        );
     } catch (error) {
         console.log(error);
     }

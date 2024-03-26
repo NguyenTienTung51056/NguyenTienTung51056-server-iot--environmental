@@ -29,7 +29,7 @@ const connectMqtt = async () => {
                     handleDistanceMessage(message.toString());
                     break;
                 case 'location':
-
+                    // handleLocationMessage(message.toString());
                     break;
                 case 'trash_level_present':
                     //console.log('Received message on distance topic:', message.toString());
@@ -48,7 +48,7 @@ const connectMqtt = async () => {
             }
         });
 
-        client.subscribe('distance', function (err) {
+        client.subscribe('distance_for_backend', function (err) {
             if (err) {
                 console.log('Error subscribing to distance:', err);
             } else {
