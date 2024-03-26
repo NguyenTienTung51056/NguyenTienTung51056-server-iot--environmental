@@ -7,6 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 
 const register = async (req, res) => {
+    const { user_name, email, password } = req.body;
     try {
         if (!user_name || !email || !password) {
             return res.status(400).json({ message: 'Please provide email and user name and password' });
@@ -47,7 +48,7 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Password is incorrect' });
         }
 
-        const token = jwt.sign({ user_id: existingUser._id, email: existingUser.email, id: existingUser._id }, JWT_SECRET, { expiresIn: '120s' });
+        const token = jwt.sign({ user_id: existingUser._id, email: existingUser.email, id: existingUser._id }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(200).json({ user: { user_id: existingUser._id, user_name: existingUser.user_name, email: existingUser.email }, token });
 
@@ -75,7 +76,7 @@ const loginAdmin = async (req, res) => {
             return res.status(400).json({ message: 'Password is incorrect' });
         }
 
-        const token = jwt.sign({ email: existingUser.email, user_id: existingUser._id, role: existingUser.role }, JWT_SECRET, { expiresIn: '120s' });
+        const token = jwt.sign({ email: existingUser.email, user_id: existingUser._id, role: existingUser.role }, JWT_SECRET, { expiresIn: '15s' });
 
         res.status(200).json({ user: { user_id: existingUser._id, user_name: existingUser.user_name, email: existingUser.email }, token });
 

@@ -39,7 +39,7 @@ const createTrashCan = async (req, res) => {
         trash_child,
         district,
         commune,
-        province
+        province,
     } = req.body;
     const {
         image_area,
@@ -47,7 +47,11 @@ const createTrashCan = async (req, res) => {
         trash_child_images
     } = req.files;
 
+    const { user_role } = req;
     try {
+        if (user_role === "user" || user_role === undefined) {
+            return res.status(403).json({ message: "you don't have permission to create this trashcan" });
+        }
         const validationError = validateTrashCanFields(req, res);
 
         if (validationError) return validationError;
@@ -149,14 +153,20 @@ const updateTrashCan = async (req, res) => {
         id_image,
         id_location,
         commune,
-        province
+        province,
     } = req.body;
     const {
         image_area,
         image_thumbnail,
         trash_child_images
     } = req.files;
+
+    const { user_role } = req;
     try {
+        console.log(user_role);
+        if (user_role === "user" || user_role === undefined) {
+            return res.status(403).json({ message: "you don't have permission to update this trashcan" });
+        }
 
         const validationError = validateTrashCanFields(req, res);
         if (validationError) return validationError;
@@ -212,8 +222,12 @@ const updateTrashCan = async (req, res) => {
 //delete a trashcan
 const deleteTrashCan = async (req, res) => {
     const id = req.params.id;
+    const { user_role } = req;
 
     try {
+        if (user_role === "user" || user_role === "admin" || user_role === undefined) {
+            return res.status(403).json({ message: "you don't have permission to delete this trashcan" });
+        }
         // Xóa Trashcan từ MongoDB
         const trashCan = await Trashcan.deleteOne({ _id: id });
 
