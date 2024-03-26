@@ -23,13 +23,13 @@ const connectMqtt = async () => {
         client.on('message', function (topic, message) {
             switch (topic) {
                 case 'connect':
-                   // console.log('Received message on distance topic:', message.toString());
+                    // console.log('Received message on distance topic:', message.toString());
                     break;
-                case 'distance':
-                     handleDistanceMessage(message.toString());
+                case 'distance_for_backend':
+                    handleDistanceMessage(message.toString());
                     break;
                 case 'location':
-                
+
                     break;
                 case 'trash_level_present':
                     //console.log('Received message on distance topic:', message.toString());
