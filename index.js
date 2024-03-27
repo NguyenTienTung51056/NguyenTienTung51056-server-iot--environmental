@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 //router
 route(app);
 
-setInterval(publishMessage, 3000);
+setInterval(publishMessage, 5000);
 
 
 app.listen(PORT, () => {

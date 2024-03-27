@@ -1,9 +1,10 @@
 import express from 'express';
-import { deleteDevice } from '../controller/device.js';
+import { deleteDevice, addDevice } from '../controller/device.js';
+import { verifyToken } from '../utils/middleware.js';
 const router = express.Router();
 
-
-router.delete('/:id', deleteDevice);
+router.post('/', verifyToken, addDevice);
+router.delete('/:id', verifyToken, deleteDevice);
 
 
 
