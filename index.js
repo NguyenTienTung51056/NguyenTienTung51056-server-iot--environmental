@@ -8,6 +8,7 @@ import route from './routes/index.js';
 import { connectMqtt } from './config/mqtt.js';
 import connectDB from './config/db.js';
 import { initializeFirebaseApp } from './config/firebase.js';
+import { publishMessage } from './utils/publishMessage.js';
 const PORT = process.env.PORT || 8080;
 
 //aloww cors
@@ -43,6 +44,9 @@ app.use(express.urlencoded({ extended: true }));
 
 //router
 route(app);
+
+setInterval(publishMessage, 3000);
+
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);

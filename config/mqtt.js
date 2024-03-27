@@ -1,6 +1,6 @@
 // mqttHandler.js
 import mqtt from 'mqtt';
-import { handleConnectMessage, handleDistanceMessage, handleLocationMessage } from '../db/mongodbHandler.js';
+import { handleDistanceMessage, handleDeviceVirtualMessage } from '../db/mongodbHandler.js';
 
 let client; // MQTT client
 
@@ -22,31 +22,35 @@ const connectMqtt = async () => {
 
         client.on('message', function (topic, message) {
             switch (topic) {
-                case 'connect':
-                    // console.log('Received message on distance topic:', message.toString());
-                    break;
+                // case 'connect':
+                //     // console.log('Received message on distance topic:', message.toString());
+                //     break;
                 case 'distance_for_backend':
                     handleDistanceMessage(message.toString());
                     break;
-                case 'location':
-                    // handleLocationMessage(message.toString());
+                case 'add_virtual':
+                    handleDeviceVirtualMessage(message.toString());
                     break;
-                case 'trash_level_present':
-                    //console.log('Received message on distance topic:', message.toString());
-                    break;
+                // case 'location':
+                //     // handleLocationMessage(message.toString());
+                //     break;
+                // case 'trash_level_present':
+                //     //console.log('Received message on distance topic:', message.toString());
+                //     break;
                 default:
                     console.log('Unknown topic:', topic);
                     break;
             }
         });
 
-        client.subscribe('connect', function (err) {
-            if (err) {
-                console.log('Error subscribing to connect:', err);
-            } else {
-                console.log('Subscribed to connect');
-            }
-        });
+
+        // client.subscribe('connect', function (err) {
+        //     if (err) {
+        //         console.log('Error subscribing to connect:', err);
+        //     } else {
+        //         console.log('Subscribed to connect');
+        //     }
+        // });
 
         client.subscribe('distance_for_backend', function (err) {
             if (err) {
@@ -56,21 +60,29 @@ const connectMqtt = async () => {
             }
         });
 
-        client.subscribe('location', function (err) {
+        client.subscribe('add_virtual', function (err) {
             if (err) {
-                console.log('Error subscribing to location:', err);
+                console.log('Error subscribing to distance:', err);
             } else {
-                console.log('Subscribed to location');
+                console.log('Subscribed to distance');
             }
         });
 
-        client.subscribe('trash_level_present', function (err) {
-            if (err) {
-                console.log('Error subscribing to trash_level_present:', err);
-            } else {
-                console.log('Subscribed to location');
-            }
-        });
+        // client.subscribe('location', function (err) {
+        //     if (err) {
+        //         console.log('Error subscribing to location:', err);
+        //     } else {
+        //         console.log('Subscribed to location');
+        //     }
+        // });
+
+        // client.subscribe('trash_level_present', function (err) {
+        //     if (err) {
+        //         console.log('Error subscribing to trash_level_present:', err);
+        //     } else {
+        //         console.log('Subscribed to location');
+        //     }
+        // });
     });
 }
 
