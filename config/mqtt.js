@@ -28,7 +28,7 @@ const connectMqtt = async () => {
                 case 'distance_for_backend':
                     handleDistanceMessage(message.toString());
                     break;
-                case 'add_virtual':
+                case 'add_virtual_data':
                     handleDeviceVirtualMessage(message.toString());
                     break;
                 // case 'location':
@@ -60,7 +60,7 @@ const connectMqtt = async () => {
             }
         });
 
-        client.subscribe('add_virtual', function (err) {
+        client.subscribe('add_virtual_data', function (err) {
             if (err) {
                 console.log('Error subscribing to distance:', err);
             } else {
