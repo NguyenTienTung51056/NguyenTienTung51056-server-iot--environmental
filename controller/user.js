@@ -76,7 +76,7 @@ const loginAdmin = async (req, res) => {
             return res.status(400).json({ message: 'Password is incorrect' });
         }
 
-        const token = jwt.sign({ email: existingUser.email, user_id: existingUser._id, role: existingUser.role }, JWT_SECRET, { expiresIn: '12h' });
+        const token = jwt.sign({ email: existingUser.email, user_id: existingUser._id, role: existingUser.role }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(200).json({ user: { user_id: existingUser._id, user_name: existingUser.user_name, email: existingUser.email }, token });
 

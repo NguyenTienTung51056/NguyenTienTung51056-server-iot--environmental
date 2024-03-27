@@ -16,6 +16,14 @@ app.use(
         origin: [
             "http://localhost:3000",
             "https://environmentadmin.netlify.app",
+            "https://environmentadmin.netlify.app/managertrash",
+            "https://environmentadmin.netlify.app/managertrash/detailtrash",
+            "https://environmentadmin.netlify.app/managertrash/detailtrash/:id",
+            "https://environmentadmin.netlify.app/managertrash/addtrash",
+            "https://environmentadmin.netlify.app/managertrash/editrash",
+            "https://environmentadmin.netlify.app/managertrash/editrash/:id",
+
+
         ],
         credentials: true,
         methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE", "PATCH"],
