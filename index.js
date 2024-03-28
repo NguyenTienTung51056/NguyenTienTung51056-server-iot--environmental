@@ -41,12 +41,15 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    next();
+});
 
 //router
 route(app);
 
 setInterval(publishMessage, 5000);
-
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
