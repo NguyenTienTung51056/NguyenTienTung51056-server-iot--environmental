@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 //router
 route(app);
 
-setInterval(publishMessage, 5000);
+setInterval(publishMessage, 10000);
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
