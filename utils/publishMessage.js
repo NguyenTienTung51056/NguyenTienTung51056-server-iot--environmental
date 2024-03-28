@@ -1,5 +1,6 @@
 import Device from "../model/device.js";
 import { client } from "../config/mqtt.js";
+import TrashCan from "../model/trashCan.js";
 
 // Định nghĩa hàm gửi message qua MQTT
 const publishMessage = async () => {
