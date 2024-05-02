@@ -16,6 +16,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:3000",
+            "https://envt.netlify.app/",
             "https://environmentadmin.netlify.app",
             "https://environmentadmin.netlify.app/",
             "https://environmentadmin.netlify.app/managertrash",
